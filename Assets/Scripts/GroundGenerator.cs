@@ -5,6 +5,7 @@ using UnityEngine;
 public class GroundGenerator : MonoBehaviour
 {
     public Transform groundPoint;
+    PUBLIC Transform minHeightPoint;
 
     public ObjectPooler[] groundPoolers;
 
