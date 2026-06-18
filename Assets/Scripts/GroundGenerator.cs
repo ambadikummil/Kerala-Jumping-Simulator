@@ -5,14 +5,25 @@ using UnityEngine;
 public class GroundGenerator : MonoBehaviour
 {
     public Transform groundPoint;
-    PUBLIC Transform minHeightPoint;
+    public Transform minHeightPoint;
+    public Transform maxHeightPoint;
+    
+    private float minY;
+    private float maxY;
+
+    public float minGap;
+    public float maxGap;
 
     public ObjectPooler[] groundPoolers;
 
     private float[] groundWidths;
 
+    private CoinGenerator coinGenerator;
+
     void Start()
     {
+        minY = minHeightPoint.position.y;
+        maxY = maxHeightPoint.position.y;
         groundWidths = new float[groundPoolers.Length];
 
         for (int i = 0; i < groundPoolers.Length; i++)
@@ -23,6 +34,7 @@ public class GroundGenerator : MonoBehaviour
                 .GetComponent<BoxCollider2D>()
                 .size.x;
         }
+        coinGenerator = FindObjectOfType<CoinGenerator>();
     }
 
     void Update()
@@ -33,9 +45,12 @@ public class GroundGenerator : MonoBehaviour
 
             float distance = groundWidths[random] / 2f;
 
+            float gap = Random.Range(minGap, maxGap);
+            float height = Random.Range(minY, maxY);
+
             transform.position = new Vector3(
-                transform.position.x + distance,
-                transform.position.y,
+                transform.position.x + distance + gap,
+                height,
                 transform.position.z
             );
 
@@ -46,6 +61,10 @@ public class GroundGenerator : MonoBehaviour
             ground.transform.position = transform.position;
 
             ground.SetActive(true);
+
+            coinGenerator.SpawnCoins(
+                transform.position,groundWidths[random]
+            );
 
             transform.position = new Vector3(
                 transform.position.x + distance,

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GroundDestoyer : MonoBehaviour
+public class GroundDestroyer : MonoBehaviour
 
 {
     private GameObject point;
